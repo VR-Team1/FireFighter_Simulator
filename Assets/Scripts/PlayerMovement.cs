@@ -3,8 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float walkSpeed = 10f;
-    public float runSpeed = 20f;
+    public float walkSpeed = 20f;
+    public float runSpeed = 40f;
     public float rotationSpeed = 5f;
     public float gravity = -9.81f;
 
@@ -20,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        bool isFirstPerson =
+            GameManager.Instance != null &&
+            GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -30,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
         Vector3 moveDir = Vector3.zero;
-        if (isMoving)
+        if (isMoving && Camera.main != null)
         {
             Transform cam = Camera.main.transform;
 
@@ -39,17 +43,20 @@ public class PlayerMovement : MonoBehaviour
 
             moveDir = (camForward * v + camRight * h).normalized;
 
-            Quaternion targetRot = Quaternion.LookRotation(moveDir);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRot,
-                rotationSpeed * Time.deltaTime
-            );
+            if (!isFirstPerson)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(moveDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRot,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
         }
 
         controller.Move(moveDir * currentSpeed * Time.deltaTime);
 
-        if (controller.isGrounded && velocity.y < 0)
+        if (controller.isGrounded && velocity.y < 0f)
             velocity.y = -2f;
 
         velocity.y += gravity * Time.deltaTime;
