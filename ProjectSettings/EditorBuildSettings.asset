@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/4_GameScene2.unity
     guid: 702abf976be11654997cc7a9fd51f832
   - enabled: 1
+    path: Assets/Scenes/5_FailScene.unity
+    guid: 7d8826309cfe8bd4e9b2ed4c83812406
+  - enabled: 1
     path: Assets/Scenes/6_SuccessScene.unity
     guid: e263a5023debd9b45be9c8b1a507b4a4
   m_configObjects:
