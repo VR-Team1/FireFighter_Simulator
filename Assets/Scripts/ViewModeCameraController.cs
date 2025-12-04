@@ -2,30 +2,31 @@ using UnityEngine;
 
 public class ViewModeCameraController : MonoBehaviour
 {
-    public Camera fpCamera;   // 1인칭 카메라
-    public Camera tpCamera;   // 3인칭 카메라
+    public Camera fpCamera;
+    public Camera tpCamera;
 
     void Start()
     {
-        ApplyViewMode();
-    }
+        bool isFirstPerson = false;
 
-    private void ApplyViewMode()
-    {
-        if (GameManager.Instance == null)
+        if (GameManager.Instance != null)
         {
-            Debug.LogWarning("GameManager 없음 - 기본으로 3인칭 사용");
-            SetMode(false);
-            return;
+            isFirstPerson = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
         }
 
-        bool isFirstPerson = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
         SetMode(isFirstPerson);
     }
 
     private void SetMode(bool firstPerson)
     {
-        if (fpCamera == null || tpCamera == null) return;
+        if (fpCamera == null || tpCamera == null)
+        {
+            Debug.LogWarning("카메라 참조가 비어 있음");
+            return;
+        }
+
+        fpCamera.enabled = firstPerson;
+        tpCamera.enabled = !firstPerson;
 
         fpCamera.gameObject.SetActive(firstPerson);
         tpCamera.gameObject.SetActive(!firstPerson);
@@ -40,5 +41,24 @@ public class ViewModeCameraController : MonoBehaviour
             tpCamera.tag = "MainCamera";
             fpCamera.tag = "Untagged";
         }
+
+        var fpListener = fpCamera.GetComponent<AudioListener>();
+        var tpListener = tpCamera.GetComponent<AudioListener>();
+
+        if (fpListener != null) fpListener.enabled = firstPerson;
+        if (tpListener != null) tpListener.enabled = !firstPerson;
+
+        if (firstPerson)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        Debug.Log($"[ViewModeCameraController] FirstPerson = {firstPerson}");
     }
 }
