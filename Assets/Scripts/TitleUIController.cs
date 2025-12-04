@@ -30,6 +30,6 @@ public class TitleUIController : MonoBehaviour
             GameManager.Instance.CurrentViewMode = ViewMode.ThirdPerson;
         }
 
-        SceneManager.LoadScene("GameScene1_Ground");
+        SceneManager.LoadScene("3_GameScene1");
     }
 }
