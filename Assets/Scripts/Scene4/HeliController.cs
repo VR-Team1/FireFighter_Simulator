@@ -7,6 +7,9 @@ public class HeliController : MonoBehaviour
     Rigidbody rb;
     PlayerControls input;
 
+    Vector3 startPos;
+    Quaternion startRot;
+
     float pitchInput;
     float yawInput;
     float liftInput;
@@ -24,21 +27,25 @@ public class HeliController : MonoBehaviour
     [Header("Roll Settings")]
     public float rollSpeed = 50f;
     public float rollReturnSpeed = 6f;
-    public float maxRoll = 25f;   // 유진 요청값
+    public float maxRoll = 25f;
 
     [Header("Movement Settings")]
-    public float yawSpeed = 70f;     // 회전 (좌우)
-    public float liftPower = 20f;    // 상승/하강 힘
-    public float forwardPower = 30f; // 전진력
-    public float sidePower = 25f;    // ← 횡이동력 (46의 핵심)
+    public float yawSpeed = 70f;
+    public float liftPower = 20f;
+    public float forwardPower = 30f;
+    public float sidePower = 25f;
 
     void Awake()
     {
+        startPos = transform.position;
+        startRot = transform.rotation;
+
         rb = GetComponent<Rigidbody>();
         input = new PlayerControls();
 
-        rb.linearDamping = 0.5f;          // 선형 감속
-        rb.angularDamping = 1.5f;   // 회전 감속
+        // PhysX 5 damping
+        rb.linearDamping = 0.3f;
+        rb.angularDamping = 1.0f;
     }
 
     void OnEnable() => input.Enable();
@@ -48,8 +55,8 @@ public class HeliController : MonoBehaviour
     {
         Vector2 tilt = input.Helicopter.Tilt.ReadValue<Vector2>();
 
-        pitchInput = tilt.y;               // NUM8/2 → pitch
-        rollInput = tilt.x;               // NUM4/6 → roll
+        pitchInput = tilt.y;
+        rollInput = tilt.x;
 
         yawInput = input.Helicopter.Yaw.ReadValue<float>();
         liftInput = input.Helicopter.Lift.ReadValue<float>();
@@ -63,8 +70,30 @@ public class HeliController : MonoBehaviour
 
         ApplyLift();
         ApplyForwardMotion();
-        ApplyStrafe();      // ★ 횡이동 추가됨
+        ApplyStrafe();
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(1);
+
+        this.transform.position = startPos;
+        this.transform.rotation = startRot;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Terrain hit!");
+
+        transform.position = startPos;
+        transform.rotation = startRot;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
 
     // ===========================
     //       Pitch 처리
@@ -97,11 +126,9 @@ public class HeliController : MonoBehaviour
     // ===========================
     void ApplyRotation()
     {
-        // pitch + roll 적용
         Quaternion baseRot = Quaternion.Euler(currentPitch, transform.localEulerAngles.y, currentRoll);
         transform.localRotation = baseRot;
 
-        // yaw 회전 (오직 입력만)
         float yawRot = yawInput * yawSpeed * Time.fixedDeltaTime;
         transform.Rotate(0f, yawRot, 0f, Space.Self);
     }
@@ -133,13 +160,12 @@ public class HeliController : MonoBehaviour
     // ===========================
     void ApplyStrafe()
     {
-        float strafeFactor = currentRoll / maxRoll;  // -1 ~ 1
+        float strafeFactor = currentRoll / maxRoll;
 
         Vector3 right = transform.right;
         right.y = 0;
         right.Normalize();
 
-        // Roll 기울기 → 횡이동
         rb.AddForce(right * (strafeFactor * sidePower), ForceMode.Acceleration);
     }
 }
