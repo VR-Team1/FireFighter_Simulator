@@ -84,8 +84,8 @@ public class HeliController : MonoBehaviour
         Vector3 forward = transform.forward;
         forward.y = 0;
         forward.Normalize();
+        float forwardFactor = pitchInput;
 
-        // W/S 입력만으로 전진/후진
-        rb.AddForce(forward * (liftInput * forwardPower), ForceMode.Acceleration);
+        rb.AddForce(forward * (forwardFactor * forwardPower), ForceMode.Acceleration);
     }
 }
