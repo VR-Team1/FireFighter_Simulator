@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float walkSpeed = 20f;
-    public float runSpeed = 40f;
+    public float runSpeed = 160f;
     public float rotationSpeed = 5f;
     public float gravity = -9.81f;
 
