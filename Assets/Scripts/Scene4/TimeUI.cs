@@ -5,6 +5,7 @@ public class TimeUI : MonoBehaviour
     public TMP_Text timerText;
     public float timeLeft = 60f;
     public float count = 1f;
+    bool isStarted = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,6 +16,9 @@ public class TimeUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.anyKeyDown) { isStarted = true; }
+        if (isStarted == false) { return; }
+
         if(timeLeft <= 0f)
         {
             timeLeft = 0f;
