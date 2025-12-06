@@ -4,26 +4,24 @@ public class WaterManager : MonoBehaviour
 {
     public Transform heli;             // 헬리콥터 Transform
     public float heightLimit = 150f;   // 물을 퍼올릴 수 있는 최대 높이
-    public float waterPercent = 0f;    // 0 ~ 100%
+    public float waterPercent = 0f;    // 물 게이지 (0~100)
     public bool isInsidePlane = false;
 
-    private Transform[] waterPlanes;
+    // 내부 캐시
+    private Transform plane;           // 자기 자신
 
     void Start()
     {
-        // 자식 Plane들을 전부 가져옴
-        waterPlanes = new Transform[transform.childCount];
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            waterPlanes[i] = transform.GetChild(i);
-        }
+        // 자식이 없다는 전제 → 자기 자신이 Plane이다
+        plane = transform;
     }
 
     void Update()
     {
         if (heli == null)
         {
-            heli = GameObject.Find("ModelHolder").transform;
+            heli = GameObject.Find("Helicopter").transform;
+            if (heli == null) return;
         }
 
         CheckWaterGet();
@@ -31,41 +29,38 @@ public class WaterManager : MonoBehaviour
 
     void CheckWaterGet()
     {
-        foreach (Transform plane in waterPlanes)
+        Vector3 pPos = plane.position;
+        Vector3 hPos = heli.position;
+
+        // Unity Plane: 1 scale = 실제 10m
+        float halfWidth = plane.localScale.x * 5f;
+        float halfDepth = plane.localScale.z * 5f;
+
+        // XZ 범위 체크 (Plane 중심 기준)
+        bool inside =
+            Mathf.Abs(hPos.x - pPos.x) <= halfWidth &&
+            Mathf.Abs(hPos.z - pPos.z) <= halfDepth;
+
+        isInsidePlane = inside;
+
+        // 물 위가 아니면 감소
+        if (!inside)
         {
-            Vector3 pPos = plane.position;
-            Vector3 hPos = heli.position;
+            if (Input.GetKey(KeyCode.E))
+                waterPercent = Mathf.Max(0f, waterPercent - 0.05f);
 
-            // Plane 스케일 기반 실제 반지름
-            float halfWidth = 5f * plane.localScale.x;
-            float halfDepth = 5f * plane.localScale.z;
-
-            // XZ 범위 판정
-            bool insidePlane =
-                Mathf.Abs(hPos.x - pPos.x) <= halfWidth &&
-                Mathf.Abs(hPos.z - pPos.z) <= halfDepth;
-
-            if (insidePlane)
-            {
-                isInsidePlane = true;
-                float height = hPos.y - pPos.y;
-
-                if (height <= heightLimit && Input.GetKey(KeyCode.Space))
-                {
-                    waterPercent = Mathf.Min(100f, waterPercent + 0.5f);
-                }
-
-                return; // 이미 한 Plane 위에 있으므로 다른 Plane 검사 필요 없음
-            }
+            return;
         }
 
-        isInsidePlane = false;
-        // 물 위에 없는데 Space 누르면 감소
-        if (Input.GetKey(KeyCode.Space))
+        // 물 위에 있을 때만 높이 판정
+        float height = hPos.y - pPos.y;
+
+        if (height <= heightLimit && Input.GetKey(KeyCode.E))
         {
-            waterPercent = Mathf.Max(0f, waterPercent - 0.1f);
+            waterPercent = Mathf.Min(100f, waterPercent + 0.5f);
         }
     }
+
     public float GetWaterPercent()
     {
         return waterPercent;
