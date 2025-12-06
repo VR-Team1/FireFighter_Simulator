@@ -16,7 +16,7 @@ public class HeliWaterDrop : MonoBehaviour
         bool hasWater = waterManager.GetWaterPercent() > 0f;
         bool isOutsideWater = waterManager.isInsidePlane == false;
 
-        if (Input.GetKey(KeyCode.Space) && hasWater && isOutsideWater)
+        if (Input.GetKey(KeyCode.E) && hasWater && isOutsideWater)
         {
             var emission = waterParticle.emission;
             emission.enabled = true;
