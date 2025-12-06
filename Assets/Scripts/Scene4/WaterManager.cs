@@ -5,6 +5,7 @@ public class WaterManager : MonoBehaviour
     public Transform heli;             // 헬리콥터 Transform
     public float heightLimit = 150f;   // 물을 퍼올릴 수 있는 최대 높이
     public float waterPercent = 0f;    // 0 ~ 100%
+    public bool isInsidePlane = false;
 
     private Transform[] waterPlanes;
 
@@ -46,6 +47,7 @@ public class WaterManager : MonoBehaviour
 
             if (insidePlane)
             {
+                isInsidePlane = true;
                 float height = hPos.y - pPos.y;
 
                 if (height <= heightLimit && Input.GetKey(KeyCode.Space))
@@ -57,10 +59,15 @@ public class WaterManager : MonoBehaviour
             }
         }
 
+        isInsidePlane = false;
         // 물 위에 없는데 Space 누르면 감소
         if (Input.GetKey(KeyCode.Space))
         {
-            waterPercent = Mathf.Max(0f, waterPercent - 0.5f);
+            waterPercent = Mathf.Max(0f, waterPercent - 0.1f);
         }
+    }
+    public float GetWaterPercent()
+    {
+        return waterPercent;
     }
 }

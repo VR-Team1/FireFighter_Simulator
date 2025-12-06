@@ -3,19 +3,26 @@ using UnityEngine;
 public class HeliWaterDrop : MonoBehaviour
 {
     public ParticleSystem waterParticle;
+    public WaterManager waterManager;
 
     void Start()
     {
         var emission = waterParticle.emission;
-        emission.enabled = false; // 처음에는 꺼둠
+        emission.enabled = false;
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space)) // 스페이스로 물 뿌리기
+        bool hasWater = waterManager.GetWaterPercent() > 0f;
+        bool isOutsideWater = waterManager.isInsidePlane == false;
+
+        if (Input.GetKey(KeyCode.Space) && hasWater && isOutsideWater)
         {
             var emission = waterParticle.emission;
             emission.enabled = true;
+
+            // 원하면 물 감소도 추가 가능
+            // waterManager.UseWater(Time.deltaTime * 5f);
         }
         else
         {
