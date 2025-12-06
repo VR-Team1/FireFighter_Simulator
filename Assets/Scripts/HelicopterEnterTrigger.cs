@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class HelicopterEnterTrigger : MonoBehaviour
 {
     [Header("다음에 로드할 씬 이름")]
-    public string nextSceneName = "4_GameScene2";
+    public string nextSceneName = "4_GameScene2 1";
 
     [Header("G 키 안내 UI")]
     public GameObject enterPromptUI;

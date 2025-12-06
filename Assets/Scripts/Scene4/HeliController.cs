@@ -2,6 +2,51 @@
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
+
+public class HeliController : MonoBehaviour
+{
+    Rigidbody rb;
+
+    [Header("Movement Speeds")]
+    public float moveSpeed = 100f;      // 앞뒤 이동 속도
+    public float turnSpeed = 70f;      // 좌우 회전 속도
+    public float liftSpeed = 70f;      // 상승/하강 속도
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;  // 헬기는 중력 OFF
+    }
+
+    void Update()
+    {
+        HandleMovement();
+    }
+
+    void HandleMovement()
+    {
+        float h = Input.GetAxis("Horizontal");   // A,D → 회전
+        float v = Input.GetAxis("Vertical");     // W,S → 이동
+
+        // 앞뒤 이동(기수 방향 기준)
+        Vector3 forwardMove = transform.forward * v * moveSpeed;
+
+        // 좌우 회전(yaw)
+        float yaw = h * turnSpeed;
+
+        // 상승/하강
+        float upDown = 0f;
+        if (Input.GetKey(KeyCode.Space)) upDown = liftSpeed;         // 상승
+        if (Input.GetKey(KeyCode.LeftShift)) upDown = -liftSpeed;  // 하강
+
+        Vector3 liftMove = Vector3.up * upDown;
+
+        rb.linearVelocity = forwardMove + liftMove;
+        transform.Rotate(0f, yaw * Time.deltaTime, 0f);
+    }
+}
+
+/*
 public class HeliController : MonoBehaviour
 {
     Rigidbody rb;
@@ -169,3 +214,4 @@ public class HeliController : MonoBehaviour
         rb.AddForce(right * (strafeFactor * sidePower), ForceMode.Acceleration);
     }
 }
+*/

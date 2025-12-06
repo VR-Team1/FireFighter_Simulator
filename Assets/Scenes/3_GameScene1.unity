@@ -1986,7 +1986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a22c090bd823eb4d9b7c04ee036a3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: 4_GameScene2
+  nextSceneName: 4_GameScene2 1
   enterPromptUI: {fileID: 728625196}
 --- !u!1 &1511350096
 GameObject:
