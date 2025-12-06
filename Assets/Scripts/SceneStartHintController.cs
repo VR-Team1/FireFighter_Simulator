@@ -8,7 +8,7 @@ public class SceneStartHintController : MonoBehaviour
     [Header("플레이어 이동 스크립트")]
     public PlayerMovement playerMovement;
 
-    [Header("십자선 UI (선택사항)")]
+    [Header("십자선 UI")]
     public GameObject crosshair;
 
     [Header("오디오 소스")]
@@ -16,6 +16,9 @@ public class SceneStartHintController : MonoBehaviour
 
     [Header("사이렌 루프 컨트롤러")]
     public SirenLooper sirenLooper;
+
+    [Header("빨간 화면 깜빡임 컨트롤러")]
+    public RedScreenFlash redScreenFlash;
 
     private bool started = false;
 
@@ -61,5 +64,8 @@ public class SceneStartHintController : MonoBehaviour
 
         if (sirenLooper != null)
             sirenLooper.PlaySirenLoop();
+
+        if (redScreenFlash != null)
+            redScreenFlash.StartFlash();
     }
 }

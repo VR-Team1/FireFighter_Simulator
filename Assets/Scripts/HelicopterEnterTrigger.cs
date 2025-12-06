@@ -6,7 +6,7 @@ public class HelicopterEnterTrigger : MonoBehaviour
     [Header("다음에 로드할 씬 이름")]
     public string nextSceneName = "4_GameScene2 1";
 
-    [Header("G 키 안내 UI")]
+    [Header("E 키 안내 UI")]
     public GameObject enterPromptUI;
 
     private bool playerInRange = false;
@@ -35,7 +35,7 @@ public class HelicopterEnterTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.G))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             if (!string.IsNullOrEmpty(nextSceneName))
             {
