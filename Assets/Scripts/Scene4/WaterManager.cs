@@ -2,68 +2,65 @@
 
 public class WaterManager : MonoBehaviour
 {
-    public Transform heli;            // 헬기 Transform
-    public float heightLimit = 150f;    // 물 위 20m까지 허용
-    MeshCollider meshColl;
+    public Transform heli;             // 헬리콥터 Transform
+    public float heightLimit = 150f;   // 물을 퍼올릴 수 있는 최대 높이
+    public float waterPercent = 0f;    // 0 ~ 100%
 
-    float waterPercent = 0f;
-
-    float halfWidth;
-    float halfDepth;
+    private Transform[] waterPlanes;
 
     void Start()
     {
-        meshColl = this.GetComponent<MeshCollider>();
+        // 자식 Plane들을 전부 가져옴
+        waterPlanes = new Transform[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            waterPlanes[i] = transform.GetChild(i);
+        }
     }
 
     void Update()
     {
-        if ( heli == null)
+        if (heli == null)
         {
             heli = GameObject.Find("ModelHolder").transform;
         }
+
         CheckWaterGet();
     }
 
     void CheckWaterGet()
     {
-        Vector3 hPos = heli.position;
-        Vector3 pPos = transform.position;
-
-        // Plane 실제 폭 (Plane 기본 크기 10 × scale)
-        float halfWidth = 5f * transform.localScale.x;
-        float halfDepth = 5f * transform.localScale.z;
-
-        // XZ 평면 안에 있는지 직접 계산
-        bool insidePlane =
-            Mathf.Abs(hPos.x - pPos.x) <= halfWidth &&
-            Mathf.Abs(hPos.z - pPos.z) <= halfDepth;
-
-        if (!insidePlane)
+        foreach (Transform plane in waterPlanes)
         {
-            return;
+            Vector3 pPos = plane.position;
+            Vector3 hPos = heli.position;
+
+            // Plane 스케일 기반 실제 반지름
+            float halfWidth = 5f * plane.localScale.x;
+            float halfDepth = 5f * plane.localScale.z;
+
+            // XZ 범위 판정
+            bool insidePlane =
+                Mathf.Abs(hPos.x - pPos.x) <= halfWidth &&
+                Mathf.Abs(hPos.z - pPos.z) <= halfDepth;
+
+            if (insidePlane)
+            {
+                float height = hPos.y - pPos.y;
+
+                if (height <= heightLimit && Input.GetKey(KeyCode.Space))
+                {
+                    waterPercent = Mathf.Min(100f, waterPercent + 0.5f);
+                }
+
+                return; // 이미 한 Plane 위에 있으므로 다른 Plane 검사 필요 없음
+            }
         }
 
-        // 2) 물 위 높이
-        if (Physics.Raycast(hPos, Vector3.down, out RaycastHit hit, 500f))
+        // 물 위에 없는데 Space 누르면 감소
+        if (Input.GetKey(KeyCode.Space))
         {
-            // 물 Plane 맞으면
-            if (hit.collider == meshColl)
-            {
-                float realHeight = hit.distance;  // ← ★ 헬기 바닥과 물 사이 진짜 거리!
-
-                Debug.Log("헬기 바닥~물 거리: " + realHeight);
-
-                // 높이가 제한 이내일 때만 물 채움
-                if (realHeight <= heightLimit)
-                {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        waterPercent = Mathf.Min(100f, waterPercent + 0.5f);
-                        Debug.Log("물 획득: " + waterPercent);
-                    }
-                }
-            }
+            waterPercent = Mathf.Max(0f, waterPercent - 0.5f);
         }
     }
 }
