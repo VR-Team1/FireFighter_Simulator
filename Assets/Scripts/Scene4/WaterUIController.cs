@@ -16,6 +16,6 @@ public class WaterUIController : MonoBehaviour
         if (fpWaterUI != null) fpWaterUI.SetActive(fp);
         if (tpWaterUI != null) tpWaterUI.SetActive(!fp);
 
-        Debug.Log($"[WaterUIController] FP Mode = {fp}");
+        //Debug.Log($"[WaterUIController] FP Mode = {fp}");
     }
 }
