@@ -4,23 +4,34 @@ public class Scene4Start : MonoBehaviour
 {
     [Header("처음에 띄울 안내 패널")]
     public GameObject startHintPanel;
+
+    [Header("타이머 UI")]
+    public TimeUI timeUI;
+
     private bool started = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         if (startHintPanel != null)
             startHintPanel.SetActive(true);
+
+        if (timeUI != null)
+            timeUI.isRunning = false;
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (started) return;
+
         if (Input.anyKeyDown)
         {
             started = true;
 
             if (startHintPanel != null)
                 startHintPanel.SetActive(false);
+
+            if (timeUI != null)
+                timeUI.StartTimer();
         }
     }
 }

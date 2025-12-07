@@ -2825,6 +2825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHintPanel: {fileID: 1396628991}
+  timeUI: {fileID: 1565684803}
 --- !u!114 &1195101112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8673,6 +8674,7 @@ MonoBehaviour:
   timerText: {fileID: 505606731}
   timeLeft: 60
   count: 1
+  isRunning: 0
 --- !u!114 &1565684804
 MonoBehaviour:
   m_ObjectHideFlags: 0
