@@ -5011,8 +5011,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uACE0\uC0DD\uD558\uC168\uC2B5\uB2C8\uB2E4!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b66917e9443dd364ba73b9c25c2a2399, type: 2}
-  m_sharedMaterial: {fileID: -5924763227722628028, guid: b66917e9443dd364ba73b9c25c2a2399, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 799558b583930c9409455f7c323b34c1, type: 2}
+  m_sharedMaterial: {fileID: -4824142645830762271, guid: 799558b583930c9409455f7c323b34c1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5173,7 +5173,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1822910086}
         m_TargetAssemblyTypeName: SuccessSceneController, Assembly-CSharp
-        m_MethodName: OnClickGoToTitle
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5196,7 +5196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.84313726}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5281,8 +5281,8 @@ MonoBehaviour:
   m_text: "\uC0B0\uBD88 \uC9C4\uC555 \uC784\uBB34\uB97C \uC131\uACF5\uC801\uC73C\uB85C
     \uC218\uD589\uD588\uC2B5\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b66917e9443dd364ba73b9c25c2a2399, type: 2}
-  m_sharedMaterial: {fileID: -5924763227722628028, guid: b66917e9443dd364ba73b9c25c2a2399, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 799558b583930c9409455f7c323b34c1, type: 2}
+  m_sharedMaterial: {fileID: -4824142645830762271, guid: 799558b583930c9409455f7c323b34c1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5626,7 +5626,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2d1fabb0c7f82bd40843905b72892240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2d1fabb0c7f82bd40843905b72892240, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6030,7 +6030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

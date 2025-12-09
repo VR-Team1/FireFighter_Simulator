@@ -8,9 +8,9 @@ public class HeliController : MonoBehaviour
     Rigidbody rb;
 
     [Header("Movement Speeds")]
-    public float moveSpeed = 100f;      // 앞뒤 이동 속도
+    public float moveSpeed = 120f;      // 앞뒤 이동 속도
     public float turnSpeed = 70f;      // 좌우 회전 속도
-    public float liftSpeed = 70f;      // 상승/하강 속도
+    public float liftSpeed = 120f;      // 상승/하강 속도
 
     void Awake()
     {

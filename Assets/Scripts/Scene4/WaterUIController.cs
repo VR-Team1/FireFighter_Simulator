@@ -7,7 +7,17 @@ public class WaterUIController : MonoBehaviour
 
     void Start()
     {
-        bool isFP = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
+        bool isFP;
+
+        if (GameManager.Instance != null)
+        {
+            isFP = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
+        }
+        else
+        {
+            isFP = false;
+        }
+
         ApplyView(isFP);
     }
 
@@ -15,7 +25,5 @@ public class WaterUIController : MonoBehaviour
     {
         if (fpWaterUI != null) fpWaterUI.SetActive(fp);
         if (tpWaterUI != null) tpWaterUI.SetActive(!fp);
-
-        //Debug.Log($"[WaterUIController] FP Mode = {fp}");
     }
 }

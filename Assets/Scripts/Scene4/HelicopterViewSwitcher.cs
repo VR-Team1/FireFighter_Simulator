@@ -7,7 +7,17 @@ public class HelicopterViewSwitcher : MonoBehaviour
 
     void Start()
     {
-        bool isFirstPerson = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
+        bool isFirstPerson;
+
+        if (GameManager.Instance != null)
+        {
+            isFirstPerson = GameManager.Instance.CurrentViewMode == ViewMode.FirstPerson;
+        }
+        else
+        {
+            isFirstPerson = false; 
+        }
+
         ApplyView(isFirstPerson);
     }
 
