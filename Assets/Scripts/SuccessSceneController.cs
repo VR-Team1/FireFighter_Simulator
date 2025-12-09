@@ -3,10 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class SuccessSceneController : MonoBehaviour
 {
-    public void Update()
+    private void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
+
     public void OnClick()
     {
         SceneManager.LoadScene("2_TitleScene");

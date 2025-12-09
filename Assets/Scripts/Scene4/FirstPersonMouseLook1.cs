@@ -31,7 +31,7 @@ public class FirstPersonMouseLook1 : MonoBehaviour
 
         if (playerBody != null)
         {
-            playerBody.Rotate(Vector3.up * -mouseX);
+            playerBody.Rotate(Vector3.up * mouseX);
         }
     }
 }
