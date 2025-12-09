@@ -4,24 +4,22 @@ public class FireFightManager : MonoBehaviour
 {
     [SerializeField] public float targetHit = 3.0f;
     float hit = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float firePercent { get; private set; } = 100f;
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Particle collision with: " + other.name);
         if (other.CompareTag("Water"))
         {
             hit++;
 
+            float ratio = hit / targetHit;
+            firePercent = 100f - (ratio * 100f);
+            firePercent = Mathf.Clamp(firePercent, 0f, 100f);
+
             if (hit >= targetHit)
             {
+                firePercent = 0f;
                 Destroy(this.gameObject);
             }
         }
