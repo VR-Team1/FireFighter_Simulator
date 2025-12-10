@@ -1104,8 +1104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3836ff7c14030447ac0cc3846d53751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHit: 3
+  targetHit: 100
   fireGaugeFill: {fileID: 1888477520}
+  fireVisual: {fileID: 1822442860}
 --- !u!135 &359474868
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2991,6 +2992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hintUI: {fileID: 1848678286}
   targetTag: Player
+  waterManager: {fileID: 1974848993}
 --- !u!1 &1124431013
 GameObject:
   m_ObjectHideFlags: 0
@@ -3672,7 +3674,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 100
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9474,9 +9476,8 @@ MonoBehaviour:
     : \uC0C1\uC2B9\r\nLeft Shift : \uD558\uAC15\r\n\r\n[\uBB3C \uCC44\uC6B0\uAE30
     & \uD654\uC7AC \uC9C4\uC555]\r\n\uAC15 \uC704\uC5D0\uC11C E\uD0A4\uB97C \uAE38\uAC8C
     \uB20C\uB7EC \uBB3C\uC744 \uCC44\uC6B0\uC138\uC694.\r\n\uBD88 \uC704\uC5D0\uC11C
-    E\uD0A4\uB97C \uC9E7\uAC8C \uC5EC\uB7EC \uBC88 \uB20C\uB7EC \uD654\uC7AC\uB97C
-    \uC9C4\uC555\uD558\uC138\uC694. \r\n\r\n\uC544\uBB34 \uD0A4\uB098 \uB20C\uB7EC\uC11C
-    \uC2DC\uC791\uD558\uC138\uC694. "
+    E\uD0A4\uB97C \uAE38\uAC8C \uB20C\uB7EC \uD654\uC7AC\uB97C \uC9C4\uC555\uD558\uC138\uC694.
+    \r\n\r\n\uC544\uBB34 \uD0A4\uB098 \uB20C\uB7EC\uC11C \uC2DC\uC791\uD558\uC138\uC694. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 799558b583930c9409455f7c323b34c1, type: 2}
   m_sharedMaterial: {fileID: -4824142645830762271, guid: 799558b583930c9409455f7c323b34c1, type: 2}
@@ -9503,8 +9504,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 10
@@ -10268,6 +10269,7 @@ MonoBehaviour:
   heightLimit: 150
   waterPercent: 0
   isInsidePlane: 0
+  isInBottomZone: 0
 --- !u!1 &1980759914
 GameObject:
   m_ObjectHideFlags: 0
